@@ -144,18 +144,18 @@
             
 
 <div class="post">
-    <a href="/2022/07/05/希望垃圾滚出我的世界/">
+    <a href="/2022/07/07/牛牛的数列/">
         <h2>
-            希望垃圾滚出我的世界
+            牛牛的数列
         </h2>
     </a>
     <div class="category-and-date">
         
         <span class="category">
-            <a href="/categories/心情小日记">
+            <a href="/categories/刷题&amp;题解">
                 <span class="icon">
                     <svg class="fa-icon"><use xlink:href="#bookmark-solid"></use></svg>
-                心情小日记
+                刷题&题解
             </a>
         </span>
         
@@ -163,13 +163,68 @@
             <span class="icon">
                 <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
             </span>
-            2022/7/5
+            2022/7/7
         </span>
     </div>
     <div class="excerpt">
         <div class="content" v-pre>
             
-            <p>身边总有一些人不要脸，好sb啊，快滚吧。垃圾快点消失。</p>
+            <p>题目链接：<a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/problem/13134">牛牛的数列</a></p>
+<hr>
+<p>好久没写代码，一道简单dp都做了好久。</p>
+<p>思路：从左往右算每个位置的最长连续上升子序列，从右往左算每个位置的最长连续下降子序列。然后遍历数组，对一个不满足要求的数，如果能修改成功（修改完后，该数大于其左边的数，小于其右边的数），那么修改后形成的长度就等于1+右边的最长连续下降子序列长度+左边的最长连续上升子序列长度；如果不能修改成功（卡了好久我才反应过来，还有这种情况），那么修改后形成的长度就等于1+max(左边的最长连续上升子序列长度，右边的最长连续下降子序列长度）。</p>
+<p><img src="/image/t1.jpg" alt="牛牛的数列"></p>
+<pre><code class="C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int n;
+int a[100005];
+int b[100005];
+int c[100005];
+int main(){
+    cin&gt;&gt;n;
+    int i;
+    for(i=1;i&lt;=n;i++)
+        cin&gt;&gt;a[i];
+    a[n+1]=1000000005;
+    b[1]=1;
+    int maxn=0;
+    c[n]=1;
+    for(i=2;i&lt;=n;i++)
+    {
+        if(a[i]&gt;a[i-1])
+            b[i]=b[i-1]+1;
+        else
+            b[i]=1;
+    }
+    for(i=1;i&lt;=n;i++)
+    {
+        if(b[i]&gt;maxn)
+            maxn=b[i];
+    }
+    for(i=n-1;i&gt;=1;i--)
+    {
+        if(a[i]&lt;a[i+1])
+            c[i]=c[i+1]+1;
+        else
+            c[i]=1;
+    }
+    for(i=1;i&lt;=n;i++)
+    {   
+        int len=0;
+        if(a[i]&gt;=a[i+1]||a[i]&lt;=a[i-1])
+        {
+            if(a[i-1]+1&lt;a[i+1])
+                len=b[i-1]+c[i+1]+1;
+            else
+                len=max(1+b[i-1],c[i+1]+1);
+
+            if(len&gt;maxn)
+                maxn=len;
+        }
+    }
+    cout&lt;&lt;maxn&lt;&lt;endl;
+}
+</code></pre>
 
             
         </div>
@@ -183,13 +238,13 @@
         
         <span class="tag">
             
-            <a href="/tags/angry" style="color: #03a9f4">
-                angry
+            <a href="/tags/线性dp" style="color: #03a9f4">
+                线性dp
             </a>
         </span>
         
     </div>
-    <a href="/2022/07/05/希望垃圾滚出我的世界/" class="go-post">
+    <a href="/2022/07/07/牛牛的数列/" class="go-post">
         阅读全文
     </a>
 </div>
@@ -239,14 +294,14 @@
         
         <span class="tag">
             
-            <a href="/tags/sad" style="color: #ffa2c4">
+            <a href="/tags/sad" style="color: #00bcd4">
                 sad
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/bbq" style="color: #03a9f4">
+            <a href="/tags/bbq" style="color: #00bcd4">
                 bbq
             </a>
         </span>
@@ -302,14 +357,14 @@
         
         <span class="tag">
             
-            <a href="/tags/boring" style="color: #00bcd4">
+            <a href="/tags/boring" style="color: #00a596">
                 boring
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/studying" style="color: #ffa2c4">
+            <a href="/tags/studying" style="color: #00bcd4">
                 studying
             </a>
         </span>
@@ -362,7 +417,7 @@
         
         <span class="tag">
             
-            <a href="/tags/nice" style="color: #03a9f4">
+            <a href="/tags/nice" style="color: #00bcd4">
                 nice
             </a>
         </span>
